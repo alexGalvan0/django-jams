@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-5(^&e0&b8u-@imza-!w-se9=@+g2smdiksp8pbm(+lxmz0#781
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.gitpod.io']
 
 
 # Application definition
@@ -130,3 +131,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DATETIME_FORMAT = "%m-%d - %M:%S"
+
