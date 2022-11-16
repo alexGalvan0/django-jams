@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Song(models.Model):
-    
+
     name = models.CharField(max_length=255, null=False, blank=False)
     genre = models.ForeignKey(
         'Genre', on_delete=models.PROTECT, blank=False, null=False)
