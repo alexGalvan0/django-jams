@@ -17,10 +17,16 @@ class Song(models.Model):
     lyrics = models.TextField(max_length=5000, default='')
     duration = models.TimeField(null=True, blank=True, default=None)
 
+    def __str__(self):
+        return self.name
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=255, null=False)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Artist(models.Model):
@@ -28,14 +34,23 @@ class Artist(models.Model):
     bio = models.TextField(max_length=1000)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Playlist(models.Model):
     name = models.CharField(max_length=255, null=False)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
     description = models.TextField(max_length=1000)
 
+    def __str__(self):
+        return self.name
+
 
 class Album(models.Model):
     name = models.CharField(max_length=255, null=False)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
     artist = models.ManyToManyField(Artist)
+
+    def __str__(self):
+        return self.name
