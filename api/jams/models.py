@@ -11,10 +11,10 @@ currentYear = today.year
 
 class Song(models.Model):
 
-    name = models.CharField(max_length=255, null=False, blank=False)
+    name = models.CharField(max_length=255, null=False)
     genre = models.ForeignKey(
-        'Genre', on_delete=models.PROTECT, blank=False, null=False)
-    artist = models.ManyToManyField('Artist', blank=False)
+        'Genre', on_delete=models.PROTECT, null=False)
+    artist = models.ManyToManyField('Artist')
     played = models.BigIntegerField(default=0)
     liked = models.BooleanField(default=None)
     album = models.ManyToManyField('Album')
@@ -53,9 +53,9 @@ class Playlist(models.Model):
 
 
 class Album(models.Model):
-    name = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255, null=False,blank=True)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
-    artist = models.ManyToManyField(Artist)
+    artist = models.ManyToManyField(Artist,blank=True,)
     year_released = models.PositiveIntegerField(
         validators=[MinValueValidator(1700), MaxValueValidator(currentYear)], default=None)
 
