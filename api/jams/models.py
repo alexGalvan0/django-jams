@@ -1,8 +1,13 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+import datetime
+
+#current year
+today = datetime.datetime.now()
+currentYear = today.year
 
 
 # Create your models here.
-
 
 class Song(models.Model):
 
@@ -13,7 +18,7 @@ class Song(models.Model):
     played = models.BigIntegerField(default=0)
     liked = models.BooleanField(default=None)
     album = models.ManyToManyField('Album')
-    playlist = models.ManyToManyField('Playlist')
+    playlist = models.ManyToManyField('Playlist', default=None, blank=True)
     lyrics = models.TextField(max_length=5000, default='')
     duration = models.TimeField(null=True, blank=True, default=None)
 
@@ -51,6 +56,8 @@ class Album(models.Model):
     name = models.CharField(max_length=255, null=False)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
     artist = models.ManyToManyField(Artist)
+    year_released = models.PositiveIntegerField(
+        validators=[MinValueValidator(1700), MaxValueValidator(currentYear)], default=None)
 
     def __str__(self):
         return self.name
