@@ -4,6 +4,7 @@ from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from pprint import pprint as pp
 
 
 # Create your views here.
@@ -11,11 +12,6 @@ from rest_framework.response import Response
 class SongViewSet(ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
-
-
-class AlbumViewSet(ModelViewSet):
-    queryset = Album.objects.all()
-    serializer_class = AlbumSerializer
 
 
 class ArtistViewSet(ModelViewSet):
@@ -31,3 +27,8 @@ class GenreViewSet(ModelViewSet):
 class PlaylistViewSet(ModelViewSet):
     queryset = Playlist.objects.all()
     serializer_class = PlaylistSerializer
+
+
+class AlbumViewSet(ModelViewSet):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer

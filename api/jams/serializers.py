@@ -28,12 +28,11 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class SongSerializer(serializers.ModelSerializer):
+    album = AlbumSerializer(many=True)
+    artist = ArtistSerializer(many=True)
+
+
     class Meta:
         model = Song
         fields = '__all__'
 
-    def create(self, validated_data):
-        album = validated_data.pop('album')
-        instance = Album.objects.get(id = album['id'])
-        song = Song.objects.create(**validated_data, album = instance)
-        pp(validated_data)
