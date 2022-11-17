@@ -19,5 +19,6 @@ router.register(r'playlists', views.PlaylistViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('addArtistToSong/<int:artistId>/<int:songId>/',views.addArtistToSong),
+    path('addSongToAlbum/<int:albumId>/<int:songId>',views.addSongToAlbum),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

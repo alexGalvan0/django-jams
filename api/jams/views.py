@@ -2,8 +2,7 @@ from .serializers import SongSerializer, AlbumSerializer, ArtistSerializer, Genr
 from .models import Song, Album, Artist, Genre, Playlist
 from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
-from rest_framework.decorators import api_view
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from pprint import pprint as pp
 
@@ -40,13 +39,32 @@ def addArtistToSong(request, artistId, songId):
         song.save()
         songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
-        
+
     if request.method == 'DELETE':
         song = Song.objects.get(id=songId)
         artist = Artist.objects.get(id=artistId)
         song.artist.remove(artist)
         song.save()
-        songSerializer = SongSerializer(song)     
+        songSerializer = SongSerializer(song)
+        return Response(songSerializer.data)
+
+# add song to album
+
+
+@api_view(['POST', 'DELETE'])
+def addSongToAlbum(request, albumId, songId):
+    song = Song.objects.get(id=songId)
+    album = Album.objects.get(id=albumId)
+
+    if request.method == 'POST':
+        song.album.add(album)
+        song.save()
+        songSerializer = SongSerializer(song)
+        return Response(songSerializer.data)
+    if request.method == 'DELETE':
+        song.album.remove(album)
+        song.save()
+        songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
 
 
