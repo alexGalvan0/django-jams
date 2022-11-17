@@ -38,11 +38,11 @@ class AlbumViewSet(ModelViewSet):
 #get album id
     @action(detail=True, methods=['POST', 'GET'])
     def getSongByAlbum(self, request, **kwargs):
-        data = []
+
         id = self.kwargs.get('pk')
         songs = Song.objects.filter(album__id = id)
         serilazier = SongSerializer(songs, many=True)
 
     
 
-        return Response({'data':serilazier.data})
+        return Response(serilazier.data)
