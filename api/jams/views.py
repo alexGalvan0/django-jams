@@ -32,17 +32,15 @@ class ArtistViewSet(ModelViewSet):
 
 @api_view(['POST', 'DELETE'])
 def addArtistToSong(request, artistId, songId):
+    song = Song.objects.get(id=songId)
+    artist = Artist.objects.get(id=artistId)
     if request.method == 'POST':
-        song = Song.objects.get(id=songId)
-        artist = Artist.objects.get(id=artistId)
         song.artist.add(artist)
         song.save()
         songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
 
     if request.method == 'DELETE':
-        song = Song.objects.get(id=songId)
-        artist = Artist.objects.get(id=artistId)
         song.artist.remove(artist)
         song.save()
         songSerializer = SongSerializer(song)
@@ -66,8 +64,6 @@ def addSongToAlbum(request, albumId, songId):
         song.save()
         songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
-
-
 
 
 class GenreViewSet(ModelViewSet):

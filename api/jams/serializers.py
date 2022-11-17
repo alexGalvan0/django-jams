@@ -29,7 +29,7 @@ class AlbumSerializer(serializers.ModelSerializer):
         pp(songs)
         album_songs = []
         for song in songs:
-            album_songs.append(f'{song.name}')
+            album_songs.append({"id":song.id,"name":song.name})
         return album_songs
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
