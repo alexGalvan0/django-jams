@@ -29,7 +29,7 @@ class ArtistViewSet(ModelViewSet):
         return Response(serializer.data)
 
 #add song to artist
-@api_view(['GET'])
+@api_view(['POST'])
 def addArtistToSong(request,artistId,songId):
     song = Song.objects.get(id=songId)
     artist = Artist.objects.get(id=artistId)
@@ -38,7 +38,7 @@ def addArtistToSong(request,artistId,songId):
     songSerializer = SongSerializer(song)
     artistSerializer = ArtistSerializer(artist)
 
-    return Response(artistSerializer.data)    
+    return Response(songSerializer.data)    
         
         
 
