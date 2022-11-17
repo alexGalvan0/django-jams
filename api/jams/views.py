@@ -34,8 +34,6 @@ class AlbumViewSet(ModelViewSet):
     serializer_class = AlbumSerializer
 
 #  want to return all songs from album
-
-#get album id
     @action(detail=True, methods=['POST', 'GET'])
     def getSongByAlbum(self, request, **kwargs):
 

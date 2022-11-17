@@ -6,7 +6,7 @@ from pprint import pprint as pp
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        fields = ['id', 'name']
+        fields = ['name']
 
 
 class PlaylistSerializer(serializers.ModelSerializer):
@@ -16,9 +16,10 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
 
 class AlbumSerializer(serializers.ModelSerializer):
+   # artist = ArtistSerializer(many=True)
     class Meta:
         model = Album
-        fields = ('__all__')
+        fields = ['name']
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -28,8 +29,8 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class SongSerializer(serializers.ModelSerializer):
-    # album = AlbumSerializer(many=True)
-    # artist = ArtistSerializer(many=True)
+    album = AlbumSerializer(many=True)
+    artist = ArtistSerializer(many=True)
 
     class Meta:
         model = Song
