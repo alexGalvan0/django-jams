@@ -19,7 +19,7 @@ class AlbumSerializer(serializers.ModelSerializer):
    # artist = ArtistSerializer(many=True)
     class Meta:
         model = Album
-        fields = '__all__'
+        fields = ['id', 'name', 'image', 'year_released']
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -34,4 +34,4 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = '__all__'
+        fields = ['id', 'name', 'album', 'artist']
