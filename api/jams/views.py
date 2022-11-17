@@ -4,11 +4,9 @@ from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from pprint import pprint as pp
 
 
 # Create your views here.
-
 class SongViewSet(ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerializer
@@ -19,7 +17,6 @@ class ArtistViewSet(ModelViewSet):
     serializer_class = ArtistSerializer
 
     # returns songs from artist
-
     @action(detail=True, methods=['GET'])
     def getSongsByArtist(self, request, **kwargs):
         id = self.kwargs.get('pk')
@@ -27,9 +24,7 @@ class ArtistViewSet(ModelViewSet):
         serializer = SongSerializer(songs, many=True)
         return Response(serializer.data)
 
-# add song to artist
-
-
+# add or delete song to artist
 @api_view(['POST', 'DELETE'])
 def addArtistToSong(request, artistId, songId):
     song = Song.objects.get(id=songId)
@@ -46,9 +41,7 @@ def addArtistToSong(request, artistId, songId):
         songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
 
-# add song to album
-
-
+# add or delete song to album
 @api_view(['POST', 'DELETE'])
 def addSongToAlbum(request, albumId, songId):
     song = Song.objects.get(id=songId)
@@ -64,6 +57,23 @@ def addSongToAlbum(request, albumId, songId):
         song.save()
         songSerializer = SongSerializer(song)
         return Response(songSerializer.data)
+
+# add or delete song from playlist
+@api_view(['POST', 'DELETE'])
+def addSongToPlaylist(request, playlistID, songID):
+    song = Song.objects.get(id=songID)
+    playlist = Playlist.objects.get(id=playlistID)
+
+    if request.method == 'POST':
+        song.playlist.add(playlist)
+        song.save()
+        playlistSerializer = PlaylistSerializer(playlist)
+        return Response(playlistSerializer.data)
+    if request.method == 'DELETE':
+        song.playlist.remove(playlist)
+        song.save()
+        playlistSerializer = PlaylistSerializer(playlist)
+        return Response(playlistSerializer.data)
 
 
 class GenreViewSet(ModelViewSet):

@@ -16,21 +16,19 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
 
 class AlbumSerializer(serializers.ModelSerializer):
-    songs = serializers.SerializerMethodField()
+    #songs = serializers.SerializerMethodField()
 
     class Meta:
         model = Album
-        fields = ['id', 'name', 'image', 'year_released','songs']
+        fields = ['id', 'name', 'image', 'year_released']
 
-    def get_songs(self,obj):
-        album_id = obj.id
-        pp(album_id)
-        songs = Song.objects.filter(album = album_id)
-        pp(songs)
-        album_songs = []
-        for song in songs:
-            album_songs.append({"id":song.id,"name":song.name})
-        return album_songs
+    # def get_songs(self,obj):
+    #     album_id = obj.id
+    #     songs = Song.objects.filter(album = album_id)
+    #     album_songs = []
+    #     for song in songs:
+    #         album_songs.append({"id":song.id,"name":song.name})
+    #     return album_songs
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
@@ -40,7 +38,8 @@ class GenreSerializer(serializers.ModelSerializer):
 class SongSerializer(serializers.ModelSerializer):
     album = AlbumSerializer(many=True)
     artist = ArtistSerializer(many=True)
+    playlist = PlaylistSerializer(many=True)
 
     class Meta:
         model = Song
-        fields = ['id', 'name', 'album', 'artist']
+        fields = ['id', 'name', 'album', 'artist','playlist']
