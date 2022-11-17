@@ -28,11 +28,9 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class SongSerializer(serializers.ModelSerializer):
-    album = AlbumSerializer(many=True)
-    artist = ArtistSerializer(many=True)
-
+    # album = AlbumSerializer(many=True)
+    # artist = ArtistSerializer(many=True)
 
     class Meta:
         model = Song
         fields = '__all__'
-

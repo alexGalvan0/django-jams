@@ -32,3 +32,17 @@ class PlaylistViewSet(ModelViewSet):
 class AlbumViewSet(ModelViewSet):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer
+
+#  want to return all songs from album
+
+#get album id
+    @action(detail=True, methods=['POST', 'GET'])
+    def getSongByAlbum(self, request, **kwargs):
+        data = []
+        id = self.kwargs.get('pk')
+        songs = Song.objects.filter(album__id = id)
+        serilazier = SongSerializer(songs, many=True)
+
+    
+
+        return Response({'data':serilazier.data})
