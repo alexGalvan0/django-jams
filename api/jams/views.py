@@ -19,8 +19,8 @@ class ArtistViewSet(ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
 
+    # returns songs from artist
 
-    #returns songs from artist
     @action(detail=True, methods=['GET'])
     def getSongsByArtist(self, request, **kwargs):
         id = self.kwargs.get('pk')
@@ -28,27 +28,35 @@ class ArtistViewSet(ModelViewSet):
         serializer = SongSerializer(songs, many=True)
         return Response(serializer.data)
 
-#add song to artist
-@api_view(['POST'])
-def addArtistToSong(request,artistId,songId):
-    song = Song.objects.get(id=songId)
-    artist = Artist.objects.get(id=artistId)
-    song.artist.add(artist)
-    song.save()
-    songSerializer = SongSerializer(song)
-    artistSerializer = ArtistSerializer(artist)
+# add song to artist
 
-    return Response(songSerializer.data)    
+
+@api_view(['POST', 'DELETE'])
+def addArtistToSong(request, artistId, songId):
+    if request.method == 'POST':
+        song = Song.objects.get(id=songId)
+        artist = Artist.objects.get(id=artistId)
+        song.artist.add(artist)
+        song.save()
+        songSerializer = SongSerializer(song)
+        return Response(songSerializer.data)
         
-        
+    if request.method == 'DELETE':
+        song = Song.objects.get(id=songId)
+        artist = Artist.objects.get(id=artistId)
+        song.artist.remove(artist)
+        song.save()
+        songSerializer = SongSerializer(song)     
+        return Response(songSerializer.data)
+
 
 
 
 class GenreViewSet(ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    # want to get evreysong from genre
 
+    # want to get evreysong from genre
     @action(detail=True, methods=['GET'])
     def getSongsByGenre(self, request, **kwargs):
         id = self.kwargs.get('pk')
@@ -60,8 +68,8 @@ class GenreViewSet(ModelViewSet):
 class PlaylistViewSet(ModelViewSet):
     queryset = Playlist.objects.all()
     serializer_class = PlaylistSerializer
-# want to get all songs from playlist
 
+# want to get all songs from playlist
     @action(detail=True, methods=['GET'])
     def getSongsByPlaylist(self, request, **kwargs):
         id = self.kwargs.get('pk')
