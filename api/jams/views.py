@@ -27,6 +27,14 @@ class GenreViewSet(ModelViewSet):
 class PlaylistViewSet(ModelViewSet):
     queryset = Playlist.objects.all()
     serializer_class = PlaylistSerializer
+# want to get all songs from playlist
+
+    @action(detail=True, methods=['GET'])
+    def getSongsByPlaylist(self, request, **kwargs):
+        id = self.kwargs.get('pk')
+        songs = Song.objects.filter(playlist__id=id)
+        serializer = SongSerializer(songs, many=True)
+        return Response(serializer.data)
 
 
 class AlbumViewSet(ModelViewSet):
@@ -34,13 +42,11 @@ class AlbumViewSet(ModelViewSet):
     serializer_class = AlbumSerializer
 
 #  want to return all songs from album
-    @action(detail=True, methods=['POST', 'GET'])
+    @action(detail=True, methods=['GET'])
     def getSongByAlbum(self, request, **kwargs):
 
         id = self.kwargs.get('pk')
-        songs = Song.objects.filter(album__id = id)
+        songs = Song.objects.filter(album__id=id)
         serilazier = SongSerializer(songs, many=True)
-
-    
 
         return Response(serilazier.data)
