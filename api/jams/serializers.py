@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from .models import Song, Artist, Playlist, Album, Genre
 from pprint import pprint as pp
+
+from rest_framework import serializers
+
+from .models import Album, Artist, Genre, Playlist, Song
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -29,6 +31,8 @@ class AlbumSerializer(serializers.ModelSerializer):
     #     for song in songs:
     #         album_songs.append({"id":song.id,"name":song.name})
     #     return album_songs
+
+
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
@@ -42,4 +46,4 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
-        fields = ['id', 'name', 'album', 'artist','playlist']
+        fields = ['id', 'name', 'album', 'artist', 'playlist']

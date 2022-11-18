@@ -1,9 +1,12 @@
-from .serializers import SongSerializer, AlbumSerializer, ArtistSerializer, GenreSerializer, PlaylistSerializer
-from .models import Song, Album, Artist, Genre, Playlist
+from django.utils.text import slugify
 from rest_framework import permissions
-from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
+from .models import Album, Artist, Genre, Playlist, Song
+from .serializers import (AlbumSerializer, ArtistSerializer, GenreSerializer,
+                          PlaylistSerializer, SongSerializer)
 
 
 # Create your views here.
@@ -25,6 +28,8 @@ class ArtistViewSet(ModelViewSet):
         return Response(serializer.data)
 
 # add or delete song to artist
+
+
 @api_view(['POST', 'DELETE'])
 def addArtistToSong(request, artistId, songId):
     song = Song.objects.get(id=songId)
@@ -42,6 +47,8 @@ def addArtistToSong(request, artistId, songId):
         return Response(songSerializer.data)
 
 # add or delete song to album
+
+
 @api_view(['POST', 'DELETE'])
 def addSongToAlbum(request, albumId, songId):
     song = Song.objects.get(id=songId)
@@ -59,6 +66,8 @@ def addSongToAlbum(request, albumId, songId):
         return Response(songSerializer.data)
 
 # add or delete song from playlist
+
+
 @api_view(['POST', 'DELETE'])
 def addSongToPlaylist(request, playlistID, songID):
     song = Song.objects.get(id=songID)

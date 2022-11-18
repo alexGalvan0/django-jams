@@ -1,8 +1,9 @@
-from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
-#current year
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+
+# current year
 today = datetime.datetime.now()
 currentYear = today.year
 
@@ -53,9 +54,9 @@ class Playlist(models.Model):
 
 
 class Album(models.Model):
-    name = models.CharField(max_length=255, null=False,blank=True)
+    name = models.CharField(max_length=255, null=False, blank=True)
     image = models.URLField(max_length=255, default='', blank=True, null=True)
-    artist = models.ManyToManyField(Artist,blank=True,)
+    artist = models.ManyToManyField(Artist, blank=True,)
     year_released = models.PositiveIntegerField(
         validators=[MinValueValidator(1700), MaxValueValidator(currentYear)], default=None)
 
